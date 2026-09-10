@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Student Support Assistant - TNSDC IBM Agentic AI Project</title>
+  <meta name="description" content="AI Student Support Assistant with RAG, Tool Calling, and Memory for College Regulations, Syllabus, FAQs, and Notices.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Background -->
+  <div class="bg-mesh"></div>
+
+  <!-- Navbar Navigation -->
+  <nav class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🎓</div>
+      <div>
+        <div class="brand-title">AI Student Assistant</div>
+        <div class="brand-subtitle">TNSDC - IBM Agentic AI Internship (Use Case 1)</div>
+      </div>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-chat">
+        <span>💬</span> AI Assistant Chat
+      </button>
+      <button class="nav-tab" data-tab="tab-kb">
+        <span>📚</span> Knowledge RAG Store
+      </button>
+      <button class="nav-tab" data-tab="tab-tools">
+        <span>🛠️</span> Student Tools Hub
+      </button>
+      <button class="nav-tab" data-tab="tab-debug">
+        <span>⚙️</span> Agent Architecture Debugger
+      </button>
+    </div>
+
+    <div class="navbar-controls">
+      <button class="btn-icon" id="theme-toggle" title="Toggle Light/Dark Theme">☀️</button>
+    </div>
+  </nav>
+
+  <!-- App Main Container -->
+  <div class="app-container">
+
+    <!-- TAB 1: AI ASSISTANT CHAT -->
+    <div class="tab-content active" id="tab-chat">
+      <div class="chat-layout">
+
+        <!-- Left Sidebar: Memory & Profile -->
+        <aside class="sidebar">
+          <div class="sidebar-card" id="sidebar-profile">
+            <!-- Dynamically populated from memory.js -->
+          </div>
+
+          <div class="sidebar-card">
+            <div class="card-title">
+              <span>🧠 Agent Long-Term Memory</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:8px;">
+              Extracted student context & preferences automatically remembered by agent:
+            </div>
+            <div id="sidebar-facts">
+              <!-- Dynamically populated from memory.js -->
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <div class="card-title">⚡ Capabilities Active</div>
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:0.8rem;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="tag tag-emerald">RAG Active</span> 8 College Docs Index
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="tag tag-emerald">Tools Ready</span> 5 Executable Functions
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="tag tag-emerald">Memory Sync</span> Dual Buffer Enabled
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Chat Stream -->
+        <main class="chat-main">
+          <div class="messages-container" id="messages-container">
+            <!-- Initial Agent Welcome Message -->
+            <div class="message agent">
+              <div class="avatar">🤖</div>
+              <div class="message-content">
+                <div class="message-text">
+                  Hello <strong>Rahul Kumar</strong>! Welcome to your <strong>AI Student Support Assistant</strong>. 🎓<br><br>
+                  I am equipped with <strong>Retrieval-Augmented Generation (RAG)</strong> over college regulations & syllabus, real-time <strong>Agent Tools</strong> (exam schedule, CGPA calculator, faculty finder, fee dues), and persistent <strong>Memory</strong>.<br><br>
+                  How can I help you today? Try typing a question or choose from the suggested presets below!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Controls -->
+          <div class="input-area">
+            <div class="preset-prompts">
+              <button class="preset-chip">📅 Show 6th sem CSE exam timetable</button>
+              <button class="preset-chip">📜 What is the attendance requirement for exams?</button>
+              <button class="preset-chip">🧮 Calculate my CGPA for O, A+, A, A, B+</button>
+              <button class="preset-chip">💰 Am I eligible for First Graduate Scholarship?</button>
+              <button class="preset-chip">👨‍🏫 Who is the HOD for Computer Science?</button>
+            </div>
+
+            <form id="chat-form">
+              <div class="input-box-container">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Ask about regulations, syllabus, exams, CGPA, scholarships, or library..." autocomplete="off">
+                <button type="submit" class="send-btn" title="Send Message">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </main>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: KNOWLEDGE RAG STORE -->
+    <div class="tab-content" id="tab-kb">
+      <div class="explorer-layout">
+        <aside class="kb-sidebar">
+          <div class="card-title">📚 Indexed Documents</div>
+          <div class="kb-list" id="kb-list">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Drag and Drop Custom Document Ingestion -->
+          <div class="dropzone" id="dropzone">
+            <div style="font-size: 24px; margin-bottom: 6px;">📥</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Upload Custom Document</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Drag & drop .txt or .md files to index dynamically into RAG</div>
+            <input type="file" id="file-input" style="display:none;" accept=".txt,.md,.json">
+          </div>
+        </aside>
+
+        <main class="kb-content-area" id="kb-view">
+          <!-- Active Document Viewer -->
+        </main>
+      </div>
+    </div>
+
+    <!-- TAB 3: STUDENT TOOLS HUB -->
+    <div class="tab-content" id="tab-tools">
+      <div class="tools-grid">
+
+        <!-- Tool 1 Card: Exam Timetable -->
+        <div class="tool-card">
+          <div class="tool-icon">📅</div>
+          <h3 style="font-family:var(--font-heading); color:#fff;">Exam Timetable Checker</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Lookup official semester end examination dates, course codes, and FN/AN slots.</p>
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <select class="form-select" id="tool-exam-dept">
+              <option value="CSE">CSE (Computer Science)</option>
+              <option value="AIDS">AI & DS (Artificial Intelligence)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Semester</label>
+            <select class="form-select" id="tool-exam-sem">
+              <option value="6">Semester 6</option>
+              <option value="4">Semester 4</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="runStandaloneTool('exam')">Execute Tool</button>
+          <div id="tool-exam-result"></div>
+        </div>
+
+        <!-- Tool 2 Card: CGPA Calculator -->
+        <div class="tool-card">
+          <div class="tool-icon">🧮</div>
+          <h3 style="font-family:var(--font-heading); color:#fff;">CGPA / SGPA Calculator</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Calculate exact GPA & classification from letter grades (O, A+, A, B+, B, RA).</p>
+          <div class="form-group">
+            <label class="form-label">Enter Letter Grades (separated by space/comma)</label>
+            <input type="text" class="form-input" id="tool-cgpa-grades" value="O, A+, A, A, B+" placeholder="e.g. O A+ A B+">
+          </div>
+          <button class="btn-primary" onclick="runStandaloneTool('cgpa')">Calculate CGPA</button>
+          <div id="tool-cgpa-result"></div>
+        </div>
+
+        <!-- Tool 3 Card: Faculty Directory -->
+        <div class="tool-card">
+          <div class="tool-icon">👨‍🏫</div>
+          <h3 style="font-family:var(--font-heading); color:#fff;">Faculty Contact Finder</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Search professors, HODs, cabins, and email addresses by department.</p>
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <select class="form-select" id="tool-fac-dept">
+              <option value="CSE">CSE Department</option>
+              <option value="AIDS">AIDS Department</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Name / Subject Keyword</label>
+            <input type="text" class="form-input" id="tool-fac-query" placeholder="e.g. Ramanathan or AI">
+          </div>
+          <button class="btn-primary" onclick="runStandaloneTool('faculty')">Search Faculty</button>
+          <div id="tool-fac-result"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: AGENT ARCHITECTURE DEBUGGER -->
+    <div class="tab-content" id="tab-debug">
+      <div style="padding:24px; width:100%; overflow-y:auto;">
+        <h2 style="font-family:var(--font-heading); color:#fff; margin-bottom:12px;">⚙️ TNSDC IBM Agentic AI Use Case 1 - System Architecture</h2>
+        <p style="color:var(--text-muted); margin-bottom:24px;">Detailed technical breakdown demonstrating RAG, Tool Calling, and Memory implementation for evaluators.</p>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+          
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:20px; border-radius:14px;">
+            <h3 style="color:var(--accent-cyan); margin-bottom:10px;">1. RAG Vector Search</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+              - <strong>Vector Engine</strong>: TF-IDF similarity & cosine scoring.<br>
+              - <strong>Indexed Documents</strong>: 8 pre-loaded regulations, syllabus, FAQs + User drag-drop upload.<br>
+              - <strong>Citation Generation</strong>: Extracts confidence scores and direct text snippets.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:20px; border-radius:14px;">
+            <h3 style="color:var(--accent-cyan); margin-bottom:10px;">2. Executable Tools Calling</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+              - <strong>Tool Registry</strong>: 5 functions (Exam Timetable, CGPA Calculator, Faculty Finder, Fee Dues, Library Catalog).<br>
+              - <strong>UI Widget Stream</strong>: Embedded HTML widget cards dynamically rendered inside the conversation stream.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); padding:20px; border-radius:14px;">
+            <h3 style="color:var(--accent-cyan); margin-bottom:10px;">3. Memory System</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;">
+              - <strong>Student Profile Store</strong>: Name, Roll No, Department, CGPA, Scholarship Quota.<br>
+              - <strong>Short-term Buffer</strong>: Sliding window conversation history.<br>
+              - <strong>Long-term Facts</strong>: Auto-extracted user facts persisted in LocalStorage.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/knowledge_base.js"></script>
+  <script src="js/rag_engine.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/memory.js"></script>
+  <script src="js/agent_core.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
